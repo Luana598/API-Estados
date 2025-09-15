@@ -26,8 +26,17 @@ const app = express()
 
 //configuração de permissões da API 
 app.use((request, response, next) => {
-    response.header('Access-Control-Allow-Origin', '*')
-    response.header('Access-Control-Allow-Methods', 'GET')
+    response.header('Access-Control-Allow-Origin', '*') //servidor de origem da API
+    response.header('Access-Control-Allow-Methods', 'GET')//verbos permitidos na API
+    //carrega as configurações no cors da API
+    app.use(cors())
+    next() //Próximo; carregar os próximos endpoints
+})
+
+//ENDPOINTS
+
+app.get('/v1/estados', function(request, response){
+    
 })
 
 
