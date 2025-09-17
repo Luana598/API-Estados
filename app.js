@@ -16,6 +16,8 @@ const express    = require('express')    //Responsável pela API
 const cors       = require('cors')       //Responsável pelas permissões da API (APP)  
 const bodyParser = require('body-parser')//Responsável por gerenciar a chegada dos dados da API com o front-end
 
+//import do arquivo de funções
+const dados = require('./modulo/funcoes.js')
 
 //retorna a porta do servidor atual ou colocamos uma porta local
 const PORT = process.PORT || 8080
@@ -30,16 +32,56 @@ app.use((request, response, next) => {
     response.header('Access-Control-Allow-Methods', 'GET')//verbos permitidos na API
     //carrega as configurações no cors da API
     app.use(cors())
-    next() //Próximo; carregar os próximos endpoints
+
+    next() //Próximo; carregar os próximos endpoints USO OBRIGATÓRIO
 })
+
+//uso do request -> chegada de dados na API
+//uso do response -> retorno de dados na API
+
 
 //ENDPOINTS
-
 app.get('/v1/estados', function(request, response){
-    
+
+    //Pesquisa na função de estados
+    let estados = dados.getAllEstados()
+
+    //retorna o status code
+    response.status(estados.status_code)
+    //retorna o JSON
+    response.json(estados)
 })
 
 
+//endpoint com o parâmetro de UF para a função 2
+app.get('/v1/estado/:uf', function(request, response){
+    let sigla = request.params.uf
+    
+    let estado = dados.getEstadoBySigla(sigla)
+
+      //retorna o status code
+      response.status(estado.status_code)
+      //retorna o JSON
+      response.json(estado)
+})
+
+
+// app.get('/v1/estados/regiao/:id', function(request, response){
+//     let sigla = request.query.uf
+//     let estado = request.query.estado
+//     let regiao = request.query.regiao
+//     let id = request.params.id
+
+//     console.log(sigla)
+//     console.log(estado)
+//     console.log(regiao)
+//     console.log(id)
+// })
+
+//Start na API
+app.listen(PORT, function(){
+    console.log('API aguardando requisições...')
+})
 
 
 
