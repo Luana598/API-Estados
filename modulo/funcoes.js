@@ -32,7 +32,7 @@ const getAllEstados = function () {
     message.quantidade = message.uf.length
 
     //para remover um atributo do JSON
-   //delete message.status 
+    //delete message.status 
 
     //tratativa de erro
     if (message.uf.length > 0)
@@ -44,14 +44,14 @@ const getAllEstados = function () {
 
 //retorna um estado pesquisando pela sigla 
 const getEstadoBySigla = function (sigla) {
-    
+
     //mensagem padrão de retorno (cabeçalho)
     let message = {
         status: true,
         status_code: 200,
-        development: "Luana M. Lopes Bomfim", 
+        development: "Luana M. Lopes Bomfim",
     }
-   
+
 
     let estado = dados.listaDeEstados.estados.find(function (item) {
         return item.sigla.toLowerCase() === sigla.toLowerCase()
@@ -66,20 +66,17 @@ const getEstadoBySigla = function (sigla) {
         return message //saída verdadeira (200)
     else
         return MESSAGE_ERRO //saída falsa (500)
-    
+
 }
-
-
-
 
 //retorna a Capital referente a um estado pesquisando pela sigla 
 const getCapitalBySigla = function (sigla) {
 
-     //mensagem padrão de retorno (cabeçalho)
-     let message = {
+    //mensagem padrão de retorno (cabeçalho)
+    let message = {
         status: true,
         status_code: 200,
-        development: "Luana M. Lopes Bomfim", 
+        development: "Luana M. Lopes Bomfim",
     }
 
     let estado = dados.listaDeEstados.estados.find(function (item) {
@@ -94,49 +91,66 @@ const getCapitalBySigla = function (sigla) {
         return message //saída verdadeira (200)
     else
         return MESSAGE_ERRO //saída falsa (500)
-     
-}
 
+}
 
 //retorna uma lista de estados pesquisando pela região
 const getEstadosByRegiao = function (regiao) {
 
-      //mensagem padrão de retorno (cabeçalho)
-      let message = {
+    //mensagem padrão de retorno (cabeçalho)
+    let message = {
         status: true,
         status_code: 200,
-        development: "Luana M. Lopes Bomfim", 
+        development: "Luana M. Lopes Bomfim",
+        regiao: '',
+        estados: []
     }
 
-    let estado = dados.listaDeEstados.estados.find(function (item) {
-        return item.regiao.toLowerCase() === regiao.toLowerCase()
+    dados.listaDeEstados.estados.forEach(function (item) {
+
+        if (item.regiao.toLowerCase() === regiao.toLowerCase())
+            message.estados.push({ uf: item.nome, descricao: item.nome })
     })
 
-    message.uf = estado.sigla
-    message.descricao = estado.nome
-    message.quantidade_cidades = estado.cidades.length
-    message.regiao = estado.regiao
+    message.regiao = regiao.toUpperCase()
 
-     if (message.uf.length > 0)
+    if (message.estados.length > 0)
         return message //saída verdadeira (200)
-     else
-         return MESSAGE_ERRO //saída falsa (500)
+    else
+        return MESSAGE_ERRO //saída falsa (500)
 }
 
 
 //retorna uma lista de estados referente às capitais do país
 const getVerifyCapitaisDoPais = function () {
+        //mensagem padrão de retorno (cabeçalho)
+        let message = {
+            status: true,
+            status_code: 200,
+            development: "Luana M. Lopes Bomfim",
+            capitais: []
+        }
 
-}
+        message.capitais = dados.listaDeEstados.estados.filter(
+            (item) => item.capital_pais
+        )
+    
+       console.log(message)
+    if (message.capitais.length > 0)
+        return message //saída verdadeira (200)
+    else
+        return MESSAGE_ERRO //saída falsa (500)
+    }
+    
 
 //retorna uma lita de cidaes pesquisando pela sigla do estado
 const getCidadesBySigla = function (sigla) {
 
-     //mensagem padrão de retorno (cabeçalho)
-     let message = {
+    //mensagem padrão de retorno (cabeçalho)
+    let message = {
         status: true,
         status_code: 200,
-        development: "Luana M. Lopes Bomfim", 
+        development: "Luana M. Lopes Bomfim",
     }
 
     let estado = dados.listaDeEstados.estados.find(function (item) {
@@ -148,22 +162,23 @@ const getCidadesBySigla = function (sigla) {
     message.quantidade_cidades = estado.cidades.length
     message.cidades = estado.cidades.map(cidades => cidades.nome)
 
-     if (message.uf.length > 0)
+    if (message.uf.length > 0)
         return message //saída verdadeira (200)
-     else
-         return MESSAGE_ERRO //saída falsa (500)
+    else
+        return MESSAGE_ERRO //saída falsa (500)
 }
 
 
 //getEstadoBySigla('mg')
 //getCapitalBySigla('rj')
 //getCidadesBySigla('ac')
+//getEstadosByRegiao('sul')
+getVerifyCapitaisDoPais()
 
-
-//console.log(getAllEstados())
 module.exports = {
     getAllEstados,
     getEstadoBySigla,
     getCapitalBySigla,
+    getEstadosByRegiao,
     getCidadesBySigla
 }

@@ -78,6 +78,18 @@ app.get('/v1/capital/:uf', function(request, response){
       response.json(capital)
 })
 
+//endpoint com o parâmetro de UF para a função 4
+app.get('/v1/estados/:regiao', function(request, response){
+    let regiao = request.params.regiao
+    
+    let estados = dados.getEstadosByRegiao(regiao)
+
+      //retorna o status code
+      response.status(estados.status_code)
+      //retorna o JSON
+      response.json(estados)
+})
+
 //endpoint com o parâmetro de UF para a função 6
 app.get('/v1/cidades/:uf', function(request, response){
     let sigla = request.params.uf
