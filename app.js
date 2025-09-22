@@ -66,6 +66,31 @@ app.get('/v1/estado/:uf', function(request, response){
 })
 
 
+//endpoint com o parâmetro de UF para a função 3
+app.get('/v1/capital/:uf', function(request, response){
+    let sigla = request.params.uf
+    
+    let capital = dados.getCapitalBySigla(sigla)
+
+      //retorna o status code
+      response.status(capital.status_code)
+      //retorna o JSON
+      response.json(capital)
+})
+
+//endpoint com o parâmetro de UF para a função 6
+app.get('/v1/cidades/:uf', function(request, response){
+    let sigla = request.params.uf
+    
+    let cidades = dados.getCidadesBySigla(sigla)
+
+      //retorna o status code
+      response.status(cidades.status_code)
+      //retorna o JSON
+      response.json(cidades)
+})
+
+
 // app.get('/v1/estados/regiao/:id', function(request, response){
 //     let sigla = request.query.uf
 //     let estado = request.query.estado

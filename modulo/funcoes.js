@@ -75,12 +75,52 @@ const getEstadoBySigla = function (sigla) {
 //retorna a Capital referente a um estado pesquisando pela sigla 
 const getCapitalBySigla = function (sigla) {
 
+     //mensagem padrão de retorno (cabeçalho)
+     let message = {
+        status: true,
+        status_code: 200,
+        development: "Luana M. Lopes Bomfim", 
+    }
+
+    let estado = dados.listaDeEstados.estados.find(function (item) {
+        return item.sigla.toLowerCase() === sigla.toLowerCase()
+    })
+
+    message.uf = estado.sigla
+    message.descricao = estado.nome
+    message.capital = estado.capital
+
+    if (message.uf.length > 0)
+        return message //saída verdadeira (200)
+    else
+        return MESSAGE_ERRO //saída falsa (500)
+     
 }
 
 
 //retorna uma lista de estados pesquisando pela região
 const getEstadosByRegiao = function (regiao) {
 
+      //mensagem padrão de retorno (cabeçalho)
+      let message = {
+        status: true,
+        status_code: 200,
+        development: "Luana M. Lopes Bomfim", 
+    }
+
+    let estado = dados.listaDeEstados.estados.find(function (item) {
+        return item.regiao.toLowerCase() === regiao.toLowerCase()
+    })
+
+    message.uf = estado.sigla
+    message.descricao = estado.nome
+    message.quantidade_cidades = estado.cidades.length
+    message.regiao = estado.regiao
+
+     if (message.uf.length > 0)
+        return message //saída verdadeira (200)
+     else
+         return MESSAGE_ERRO //saída falsa (500)
 }
 
 
@@ -92,13 +132,38 @@ const getVerifyCapitaisDoPais = function () {
 //retorna uma lita de cidaes pesquisando pela sigla do estado
 const getCidadesBySigla = function (sigla) {
 
+     //mensagem padrão de retorno (cabeçalho)
+     let message = {
+        status: true,
+        status_code: 200,
+        development: "Luana M. Lopes Bomfim", 
+    }
+
+    let estado = dados.listaDeEstados.estados.find(function (item) {
+        return item.sigla.toLowerCase() === sigla.toLowerCase()
+    })
+
+    message.uf = estado.sigla
+    message.descricao = estado.nome
+    message.quantidade_cidades = estado.cidades.length
+    message.cidades = estado.cidades.map(cidades => cidades.nome)
+
+     if (message.uf.length > 0)
+        return message //saída verdadeira (200)
+     else
+         return MESSAGE_ERRO //saída falsa (500)
 }
 
 
-getEstadoBySigla('mg')
+//getEstadoBySigla('mg')
+//getCapitalBySigla('rj')
+//getCidadesBySigla('ac')
+
 
 //console.log(getAllEstados())
 module.exports = {
     getAllEstados,
-    getEstadoBySigla
+    getEstadoBySigla,
+    getCapitalBySigla,
+    getCidadesBySigla
 }
