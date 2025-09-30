@@ -1,0 +1,15 @@
+# Dependências
+node_modules/
+
+# Arquivo de variáveis de ambiente
+.env
+
+# Logs
+*.log
+
+# Arquivos temporários
+*.tmp
+
+# Configuração de IDE
+.vscode/
+.idea/
