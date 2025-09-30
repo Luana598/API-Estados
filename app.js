@@ -90,6 +90,14 @@ app.get('/v1/estados/:regiao', function(request, response){
       response.json(estados)
 })
 
+//endpoint com o parâmetro de UF para a função 5
+app.get('/v1/capitais', function(request, response){
+    let capitais = dados.getVerifyCapitaisDoPais()
+
+    response.status(capitais.status_code)
+    response.json(capitais)
+})
+
 //endpoint com o parâmetro de UF para a função 6
 app.get('/v1/cidades/:uf', function(request, response){
     let sigla = request.params.uf
@@ -103,7 +111,7 @@ app.get('/v1/cidades/:uf', function(request, response){
 })
 
 
-// app.get('/v1/estados/regiao/:id', function(request, response){
+ //app.get('/v1/estados/regiao/:id', function(request, response){
 //     let sigla = request.query.uf
 //     let estado = request.query.estado
 //     let regiao = request.query.regiao

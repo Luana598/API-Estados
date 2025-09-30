@@ -131,15 +131,24 @@ const getVerifyCapitaisDoPais = function () {
             capitais: []
         }
 
-        message.capitais = dados.listaDeEstados.estados.filter(
-            (item) => item.capital_pais
-        )
+        dados.listaDeEstados.estados.forEach(function (item) {
+
+            if (item.capital_pais && (item.capital_pais.ano_inicio)) {
+                message.capitais.push({
+                    uf: item.sigla,
+                    descricao: item.nome,
+                    capital: item.capital,
+                    regiao: item.regiao,
+                    capital_pais_ano_inicio: item.capital_pais.ano_inicio,
+                    capital_pais_ano_termino: item.capital_pais.ano_fim
+                })
+            }
+        })
     
-       console.log(message)
-    if (message.capitais.length > 0)
-        return message //saída verdadeira (200)
-    else
-        return MESSAGE_ERRO //saída falsa (500)
+        if (message.capitais.length > 0)
+            return message //saída verdadeira (200)
+        else
+            return MESSAGE_ERRO //saída falsa (500)
     }
     
 
@@ -169,16 +178,11 @@ const getCidadesBySigla = function (sigla) {
 }
 
 
-//getEstadoBySigla('mg')
-//getCapitalBySigla('rj')
-//getCidadesBySigla('ac')
-//getEstadosByRegiao('sul')
-getVerifyCapitaisDoPais()
-
 module.exports = {
     getAllEstados,
     getEstadoBySigla,
     getCapitalBySigla,
     getEstadosByRegiao,
-    getCidadesBySigla
+    getCidadesBySigla,
+    getVerifyCapitaisDoPais
 }
